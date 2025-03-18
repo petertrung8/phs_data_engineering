@@ -1,0 +1,29 @@
+id: phs-dataset-pipeline
+namespace: phs-dataset
+
+variables:
+  startDate: "{{trigger.previous | date('yyyyMMdd')}}"
+  endDate: "{{trigger.date | date('yyyyMMdd')}}"
+  query: "SELECT%20%2A%20from%20%22bfd4b329-c414-4a13-8892-58994bc739c5%22%20WHERE%20%22WeekBeginning%22%20%3E%3D%20{{render(vars.startDate)}}%20AND%20%22WeekBeginning%22%20%3C%20{{render(vars.endDate)}}"
+  gcs_file: "gs://{{kv('GCP_BUCKET_NAME')}}/{{vars.file}}"
+
+tasks:
+
+  - id: extract
+    type: io.kestra.plugin.core.http.Download
+    uri: https://www.opendata.nhs.scot/api/3/action/datastore_search_sql?sql={{render(vars.query)}}
+  
+  - id: upload_to_gs
+    type: io.kestra.plugin.gcp.gcs.Upload
+    from: "{{ outputs.extract.uri }}"
+    to: "{{render(vars.gcs_file)}}"
+  
+#  - id: purge_files
+#    type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
+#    description: This will remove output files. If you'd like to explore Kestra outputs, disable it.
+
+
+triggers:
+  - id: schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 1 * * 1"
