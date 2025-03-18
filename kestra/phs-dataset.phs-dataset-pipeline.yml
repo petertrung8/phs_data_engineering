@@ -1,29 +1,72 @@
 id: phs-dataset-pipeline
 namespace: phs-dataset
 
+inputs:
+  - id: disease
+    type: SELECT
+    displayName: Select disease type
+    values: [covid, respiratory]
+    defaults: covid
+
 variables:
   startDate: "{{trigger.previous | date('yyyyMMdd')}}"
   endDate: "{{trigger.date | date('yyyyMMdd')}}"
-  query: "SELECT%20%2A%20from%20%22bfd4b329-c414-4a13-8892-58994bc739c5%22%20WHERE%20%22WeekBeginning%22%20%3E%3D%20{{render(vars.startDate)}}%20AND%20%22WeekBeginning%22%20%3C%20{{render(vars.endDate)}}"
+  queryCovid: "SELECT%20%2A%20from%20%22d304beee-badd-4d4d-b6cf-19651b303676%22%20WHERE%20%22WeekEnding%22%20%3E%3D%20{{render(vars.startDate)}}%20AND%20%22WeekEnding%22%20%3C%20{{render(vars.endDate)}}"
+  queryResp: "SELECT%20%2A%20from%20%2275201270-269c-431b-9808-e52efe4c7b25%22%20WHERE%20%22WeekEnding%22%20%3E%3D%20{{render(vars.startDate)}}%20AND%20%22WeekEnding%22%20%3C%20{{render(vars.endDate)}}"
+  file: "{{inputs.disease}}_{{vars.startDate}}_{{vars.endDate}}.json"
   gcs_file: "gs://{{kv('GCP_BUCKET_NAME')}}/{{vars.file}}"
 
 tasks:
 
-  - id: extract
-    type: io.kestra.plugin.core.http.Download
-    uri: https://www.opendata.nhs.scot/api/3/action/datastore_search_sql?sql={{render(vars.query)}}
+  - id: ifCovid
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{inputs.disease == 'covid'}}"
+    then:
+      - id: extractCovid
+        type: io.kestra.plugin.core.http.Download
+        uri: https://www.opendata.nhs.scot/api/3/action/datastore_search_sql?sql={{render(vars.queryCovid)}}
+      
+      - id: upload_to_gs_covid
+        type: io.kestra.plugin.gcp.gcs.Upload
+        from: "{{ outputs.extractCovid.uri }}"
+        to: "{{render(vars.gcs_file)}}"
+
   
-  - id: upload_to_gs
-    type: io.kestra.plugin.gcp.gcs.Upload
-    from: "{{ outputs.extract.uri }}"
-    to: "{{render(vars.gcs_file)}}"
+  - id: ifResp
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{inputs.disease == 'respiratory'}}"
+    then:
+      - id: extractResp
+        type: io.kestra.plugin.core.http.Download
+        uri: https://www.opendata.nhs.scot/api/3/action/datastore_search_sql?sql={{render(vars.queryResp)}}
   
-#  - id: purge_files
-#    type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
-#    description: This will remove output files. If you'd like to explore Kestra outputs, disable it.
+      - id: upload_to_gs_resp
+        type: io.kestra.plugin.gcp.gcs.Upload
+        from: "{{ outputs.extractResp.uri }}"
+        to: "{{render(vars.gcs_file)}}"
+  
+  - id: purge_files
+    type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
+    description: This will remove output files. If you'd like to explore Kestra outputs, disable it.
+
+pluginDefaults:
+  - type: io.kestra.plugin.gcp
+    values:
+      serviceAccount: "{{kv('GCP_CREDS')}}"
+      projectId: "{{kv('GCP_PROJECT_ID')}}"
+      location: "{{kv('GCP_LOCATION')}}"
+      bucket: "{{kv('GCP_BUCKET_NAME')}}"
 
 
 triggers:
-  - id: schedule
+  - id: covid_schedule
     type: io.kestra.plugin.core.trigger.Schedule
     cron: "0 1 * * 1"
+    inputs:
+      disease: covid
+
+  - id: respiratory_schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 1 * * 1"
+    inputs:
+      disease: respiratory
