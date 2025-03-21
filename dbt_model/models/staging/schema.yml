@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: staging
+    database: phs-accident-weekly
+    schema: phs_dataset
+
+    tables:
+      - name: covid_data
+      - name: resp_data
