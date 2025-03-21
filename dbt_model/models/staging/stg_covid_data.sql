@@ -4,7 +4,7 @@ with coviddata as (
 
 select
     unique_row_id,
-    filename,
+    filename as covidFilename,
     weekending,
     healthboardoftreatment,
     IFNULL(admissions, 0 ) as covidAdmissions

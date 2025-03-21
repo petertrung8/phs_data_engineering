@@ -4,7 +4,7 @@ with respdata as (
 
 select
     unique_row_id,
-    filename,
+    filename as respFilename,
     weekending,
     healthboardoftreatment,
     IFNULL(influenzaadmissions, 0) as influenzaadmissions,
