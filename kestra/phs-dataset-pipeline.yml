@@ -88,7 +88,6 @@ tasks:
           CREATE OR REPLACE TABLE `{{kv('GCP_PROJECT_ID')}}.{{kv('GCP_DATASET')}}.data_tmp` AS
           SELECT
             MD5(CONCAT(
-              COALESCE(CAST(_id AS STRING), ""),
               COALESCE(CAST(WeekEnding AS STRING), ""),
               COALESCE(CAST(HealthBoardOfTreatment AS STRING), "")
             )) AS unique_row_id,
@@ -172,11 +171,9 @@ tasks:
       - id: bq_resp_table_tmp
         type: io.kestra.plugin.gcp.bigquery.Query
         sql: |
-          CREATE OR REPLACE TABLE `{{kv('GCP_PROJECT_ID')}}.{{kv('GCP_DATASET')}}.data_tmp`
-          AS
+          CREATE OR REPLACE TABLE `{{kv('GCP_PROJECT_ID')}}.{{kv('GCP_DATASET')}}.data_tmp` AS
           SELECT
             MD5(CONCAT(
-              COALESCE(CAST(_id AS STRING), ""),
               COALESCE(CAST(WeekEnding AS STRING), ""),
               COALESCE(CAST(HealthBoardOfTreatment AS STRING), "")
             )) AS unique_row_id,
