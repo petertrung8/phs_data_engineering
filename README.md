@@ -28,7 +28,7 @@ The data used for this project was obtained from [Scottish Health and Social Car
     * **BigQuery** (data warehouse)
 
 #### Data architecture
-
+![Data architecture](figures/architecture.jpg)
 
 #### Data pipeline
 
@@ -38,7 +38,7 @@ The data used for this project was obtained from [Scottish Health and Social Car
 4. Every week, the tables are then loaded into Looker studio to display metrics such as the total weekly infections per disease, the time series trend of the infection and the number of infections per local NHS board.
 
 Preview of the Dashboard:
-![PHS Dashboard](./figures/Dashboard.JPG)
+![PHS Dashboard](figures/Dashboard.JPG)
 It can be accessed at this [link](https://lookerstudio.google.com/reporting/a6175b18-877f-4cd7-95ee-0cee49ce640a)
 
 #### Setup
