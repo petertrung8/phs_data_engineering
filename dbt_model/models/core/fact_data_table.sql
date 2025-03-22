@@ -17,15 +17,8 @@ with covid as (select unique_row_id as covid_id, covidAdmissions, covidFilename 
                     IFNULL(viral_t.covidAdmissions, 0) as covidAdmissions,
                     IFNULL(viral_t.influenzaadmissions, 0) as influenzaadmissions,
                     IFNULL(viral_t.rsvadmissions, 0) as rsvadmissions
-                 from viral_t),
-     stg_fact as (select * from union_t
-                  left join hb_code
-                  on union_t.healthboardoftreatment = hb_code.hb
-                  order by weekending)
-select stg_fact.weekending,
-    stg_fact.healthboardoftreatment,
-    IFNULL(stg_fact.HBName, "Total") as HBName,
-    stg_fact.covidAdmissions,
-    stg_fact.influenzaadmissions,
-    stg_fact.rsvadmissions
-from stg_fact
+                 from viral_t)
+select * from union_t
+left join hb_code
+on union_t.healthboardoftreatment = hb_code.hb
+order by weekending

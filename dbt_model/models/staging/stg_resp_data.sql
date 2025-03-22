@@ -10,10 +10,11 @@ select
     IFNULL(influenzaadmissions, 0) as influenzaadmissions,
     IFNULL(rsvadmissions, 0) as rsvadmissions
 from respdata
+where healthboardoftreatment != 'S92000003'
 
 -- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
 {% if var('is_test_run', default=true) %}
 
-  limit 10
+  limit 100
 
 {% endif %}
