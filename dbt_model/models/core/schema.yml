@@ -1,0 +1,76 @@
+
+version: 2
+
+models:
+  - name: dim_weekly_infection
+    description: "Aggregated table of infection types and total infection for the whole Scotland. The table contains weekly sum of the infections."
+    columns:
+      - name: weekending
+        data_type: date
+        description: ""
+
+      - name: healthboardoftreatment
+        data_type: string
+        description: ""
+
+      - name: hbname
+        data_type: string
+        description: ""
+
+      - name: covidadmissions
+        data_type: numeric
+        description: ""
+
+      - name: influenzaadmissions
+        data_type: numeric
+        description: ""
+
+      - name: rsvadmissions
+        data_type: numeric
+        description: ""
+
+      - name: totalinfections
+        data_type: numeric
+        description: ""
+
+  - name: fact_data_table
+    description: "Weekly infection data for COVID-19, influenza and RSV. The table includes records for each Health Board and the total for Scotland."
+    columns:
+      - name: weekending
+        data_type: date
+        description: ""
+
+      - name: healthboardoftreatment
+        data_type: string
+        description: ""
+
+      - name: hbname
+        data_type: string
+        description: ""
+
+      - name: covidadmissions
+        data_type: numeric
+        description: ""
+
+      - name: influenzaadmissions
+        data_type: numeric
+        description: ""
+
+      - name: rsvadmissions
+        data_type: numeric
+        description: ""
+
+  - name: dim_hb
+    description: "9 digit standard geography codes (S08) and matching labels Health Board 2014 (revised in 2018 & 2019) in the health sector, including non standard 6 digit alphanumeric code to indicate Special Health Boards (SB08) and National Facilities (SN08) in NHS Scotland."
+    columns:
+      - name: hb
+        data_type: string
+        description: ""
+
+      - name: hbname
+        data_type: string
+        description: ""
+
+      - name: country
+        data_type: string
+        description: ""
