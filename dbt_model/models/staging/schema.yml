@@ -1,0 +1,81 @@
+version: 2
+
+sources:
+  - name: staging
+    database: phs-accident-weekly
+    schema: phs_dataset
+
+    tables:
+      - name: covid_data
+      - name: resp_data
+
+models:
+  - name: stg_covid_data
+    description: "Weekly number of acute COVID-19 hospital admissions across Scotland by NHS Health Board of treatment."
+    columns:
+      - name: unique_row_id
+        data_type: bytes
+        description: "Assigned unique id based on the HB code and week."
+        tests:
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
+          
+
+      - name: covidfilename
+        data_type: string
+        description: "Name of the origin file."
+
+      - name: weekending
+        data_type: date
+        description: "This represents the week a patient was admitted, as the last day (Sunday) of that week. This is stored as a numeric in the format CCYYMMDD."
+
+      - name: healthboardoftreatment
+        data_type: string
+        description: "9-digit code for Health Board of Treatment. Health Board code based on boundaries as at 1st April 2019. Health Board is assigned based on postcode of treatment."
+
+      - name: covidadmissions
+        data_type: numeric
+        description: "Number of acute COVID-19 admissions to hospital each week"
+        tests:
+          - not_null:
+              severity: warn
+
+  - name: stg_resp_data
+    description: "Weekly number Influenza and RSV acute hospital admissions by NHS Health Board of Treatment."
+    columns:
+      - name: unique_row_id
+        data_type: bytes
+        description: "Assigned unique id based on the HB code and week."
+        tests:
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
+      
+      - name: respfilename
+        data_type: string
+        description: "Name of the origin file."
+
+      - name: weekending
+        data_type: date
+        description: "This represents the week a patient was admitted, as the last day (Sunday) of that week. This is stored as a numeric in the format CCYYMMDD."
+
+      - name: healthboardoftreatment
+        data_type: string
+        description: "9-digit code for Health Board of Treatment. Health Board code based on boundaries as at 1st April 2019. Health Board is assigned based on postcode of treatment."
+
+      - name: influenzaadmissions
+        data_type: numeric
+        description: "Number of acute Influenza (Type A or B pathogens) admissions to hospital each week"
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: rsvadmissions
+        data_type: numeric
+        description: "Number of acute Respiratory Syncytial Virus (RSV) admissions to hospital each week"
+        tests:
+          - not_null:
+              severity: warn
