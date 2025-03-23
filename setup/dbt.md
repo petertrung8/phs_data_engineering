@@ -1,4 +1,4 @@
-#### Setting up dbt Cloud project
+## Setting up dbt Cloud project
 
 1. Create a [dbt account](https://www.getdbt.com/).
 2. Once logged in, complete setup by creating a new project.
@@ -11,7 +11,7 @@ Note: This step requires that you clone the project repository to your own repos
 6. Head to your GitHub repository and in the Settings tab, navigate to `Security`, `Deploy keys`. Select `Add deploy key` and paste the deploy key provided by dbt cloud. Make sure to select `Allow write access`.
 7. Then in `Advanced Settings` in dbt Cloud, make sure the project subdirectory is in `dbt`.
 
-## Setting up the production environment and the dbt Cloud job
+#### Setting up the production environment and the dbt Cloud job
 8. Ensure that the `schema.yml` has the correct database (your GCP Project ID).
 ```
 YAML

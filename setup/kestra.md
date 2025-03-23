@@ -1,6 +1,6 @@
-#### Kestra setup
+## Kestra setup
 
-## Launch Kestra
+#### Launch Kestra
 
 Navigate to the `kestra` folder. Use the following command to start the Kestra server:
 ```
@@ -8,7 +8,7 @@ docker-compose up -d
 ```
 In VSCode forward the port `8080`. Open the URL http://localhost:8080 in your browser to launch the UI.
 
-## GCP connection setup
+#### GCP connection setup
 
 To connect with GCP, follow this procedure:
 1. Copy the flow from `gcp_kv.yml` into Kestra. 
@@ -20,7 +20,7 @@ To connect with GCP, follow this procedure:
 
 If you check `KV Store` in the `phs-dataset`, `GCP_DATASET`, `GCP_BUCKET_NAME`, `GCP_PROJECT_ID` and `GCP_LOCATION` should have been created.
 
-## Running the flow
+#### Running the flow
 
 Copy the flow from the `phs-dataset-pipeline.yml` into Kestra. The flow should have triggers enabled that run every Monday at 1am.
 

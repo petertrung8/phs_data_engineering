@@ -1,6 +1,6 @@
-#### VM Setup details
+## VM Setup details
 
-## SSH setup
+#### SSH setup
 
 When the VM is started a unique external IP will be assigned. Note it down as we will need it later.
 
@@ -41,9 +41,9 @@ ssh CONNECTION_NAME
 ```
 This is particularly useful when doing the port forwarding.
 
-## VM environment setup
+#### VM environment setup
 
-# Python (via miniconda)
+###### Python (via miniconda)
 To install miniconda, use the following commands in the CLI of the VM.
 
 ```
@@ -54,7 +54,7 @@ source ~/.bashrc
 
 Running the last command should initiate conda in the VM.
 
-# Docker
+###### Docker
 
 Run the following commands to install Docker in the VM
 ```
@@ -69,7 +69,7 @@ sudo service docker restart
 ```
 You can double check the installation with `docker help`.
 
-# Docker Compose
+###### Docker Compose
 
 Docker Compose is seperate from Docker so it needs to be installed seperately. It is best to install it in a different folder like `~/bin` so create it and navigate into it.
 
@@ -89,7 +89,7 @@ export PATH="${HOME}/bin:${PATH}"
 Restart terminal or do `source .bashrc` to add Docker Compose to the environment.
 
 
-## Forwarding port from VM to local machine
+#### Forwarding port from VM to local machine
 
 **This requires to have configuration file setup.**
 

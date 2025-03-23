@@ -1,4 +1,4 @@
-#### Terraform files setup
+## Terraform files setup
 
 For setting up properly Terraform, several edits need to be done in the `variables.tf` file.
 
@@ -9,7 +9,7 @@ Required edits:
 
 Other edits are optional, depending on your location and region.
 
-## Infrastructure initialization
+#### Infrastructure initialization
 
 Once you renamed the above fields, creating the infrastructure in GCP is done like this:
 
