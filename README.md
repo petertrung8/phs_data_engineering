@@ -39,18 +39,19 @@ The data used for this project was obtained from [Scottish Health and Social Car
 
 Preview of the Dashboard:
 ![PHS Dashboard](figures/Dashboard.JPG)
-It can be accessed at this [link](https://lookerstudio.google.com/reporting/a6175b18-877f-4cd7-95ee-0cee49ce640a)
+It can be accessed at this [link](https://lookerstudio.google.com/reporting/a6175b18-877f-4cd7-95ee-0cee49ce640a).
 
 #### Setup
 
 Prerequisites (click on each to go to their installation page):
-* Git
-* Terraform
-* VSCode
+* [Git](https://git-scm.com/downloads)
+* [Terraform](https://developer.hashicorp.com/terraform/install)
+* [VSCode](https://code.visualstudio.com/download)
 
 The following steps will need to be done to replicate this project. To get more details, click on the links in the steps to get more detailed explanations.
 
-1. Setting up the Google Cloud Project and obtain a Service Account login.
-2. Run terraform to create the Cloud environment (Compute Engine VM, Google Cloud Storage bucket, BigQuery).
-3. Setting up Kestra docker and setup the connection with GCP.
-4. Setup your dbt Cloud project and the dbt Cloud job.
+1. Setting up the Google Cloud Project and obtain a Service Account login. [Setup details](setup/gcp_setup.md)
+2. Run terraform to create the Cloud environment (Compute Engine VM, Google Cloud Storage bucket, BigQuery). [Setup details](setup/terraform.md)
+3. Setup the VM environment and SSH connection. [Setup details](setup/VM_setup.md)
+4. Setting up Kestra docker and setup the connection with GCP. [Setup details](setup/kestra.md)
+5. Setup your dbt Cloud project and the dbt Cloud job. [Setup details](setup/dbt.md)
