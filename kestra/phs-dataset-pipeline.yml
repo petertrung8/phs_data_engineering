@@ -220,12 +220,12 @@ pluginDefaults:
 triggers:
   - id: covid_schedule
     type: io.kestra.plugin.core.trigger.Schedule
-    cron: "0 1 * * 1"
+    cron: "0 1 * * 6"
     inputs:
       disease: covid
 
   - id: respiratory_schedule
     type: io.kestra.plugin.core.trigger.Schedule
-    cron: "0 1 * * 1"
+    cron: "30 1 * * 6"
     inputs:
       disease: respiratory
